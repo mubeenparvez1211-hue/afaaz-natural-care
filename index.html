@@ -10,18 +10,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 
-    <style>
-    @media screen and (max-width: 768px) {
-        /* This forces the product image containers to expand on mobile */
-        section img {
-            width: 80% !important;
-            height: auto !important;
-            object-fit: cover !important;
-            max-width: 80% !important;
-            border-radius: 6px;
+        <style>
+        @media screen and (max-width: 768px) {
+            section img {
+                width: 100% !important;
+                height: 220px !important; /* Locks the height so it doesn't push text out */
+                object-fit: contain !important; /* Keeps the entire image visible without stretching or cropping */
+                border-radius: 8px;
+            }
         }
-    }
-</style>
+        </style>
+    
     
     <style>
    :root {
