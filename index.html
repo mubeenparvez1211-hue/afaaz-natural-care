@@ -678,81 +678,82 @@
 
         // Update the displayed price based on size and quantity
         function updatePrice(productId) {
-            const sizeSelect = document.getElementById(`size-${productId}`);
-            const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
-            const basePrice = parseInt(selectedOption.getAttribute('data-price'));
-            
-            const qty = parseInt(document.getElementById(`qty-${productId}`).value);
-            const total = basePrice * qty;
-            
-            document.getElementById(`price-${productId}`).textContent = total;
+            try {
+                const sizeSelect = document.getElementById(`size-${productId}`);
+                const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+                const basePrice = parseInt(selectedOption.getAttribute('data-price'));
+                
+                const qtyInput = document.getElementById(`qty-${productId}`);
+                const qty = parseInt(qtyInput.value);
+                const total = basePrice * qty;
+                
+                document.getElementById(`price-${productId}`).textContent = total;
+            } catch (error) {
+                console.error("Error updating price:", error);
+            }
         }
 
         // Handle quantity plus/minus buttons
         function updateQty(productId, change) {
-            const qtyInput = document.getElementById(`qty-${productId}`);
-            let currentQty = parseInt(qtyInput.value);
-            
-            let newQty = currentQty + change;
-            if (newQty < 1) newQty = 1; // Prevent going below 1
-            
-            qtyInput.value = newQty;
-            updatePrice(productId); // Recalculate price
+            try {
+                const qtyInput = document.getElementById(`qty-${productId}`);
+                let currentQty = parseInt(qtyInput.value);
+                
+                let newQty = currentQty + change;
+                if (newQty < 1) newQty = 1; // Prevent going below 1
+                
+                qtyInput.value = newQty;
+                updatePrice(productId); // Recalculate price
+            } catch (error) {
+                console.error("Error updating quantity:", error);
+            }
         }
 
-        // Send Product Order
+        // Send Product Order - FIXED for Mobile Browsers
         function sendOrder(productId, productName) {
-            const sizeSelect = document.getElementById(`size-${productId}`);
-            const selectedSize = sizeSelect.options[sizeSelect.selectedIndex].value;
-            const qty = document.getElementById(`qty-${productId}`).value;
-            const totalPrice = document.getElementById(`price-${productId}`).textContent;
-            
-            const message = `Hello Afaaz Natural Care! I would like to order:%0A%0A*Product:* ${productName}%0A*Size:* ${selectedSize}%0A*Quantity:* ${qty}%0A*Total Price:* ₹${totalPrice}%0A%0APlease let me know the payment details.`;
-            
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${message}`;
-            window.open(whatsappUrl, '_blank');
+            try {
+                const sizeSelect = document.getElementById(`size-${productId}`);
+                const selectedSize = sizeSelect.options[sizeSelect.selectedIndex].value;
+                const qty = document.getElementById(`qty-${productId}`).value;
+                const totalPrice = document.getElementById(`price-${productId}`).textContent;
+                
+                const message = `Hello Afaaz Natural Care! I would like to order:%0A%0A*Product:* ${productName}%0A*Size:* ${selectedSize}%0A*Quantity:* ${qty}%0A*Total Price:* ₹${totalPrice}%0A%0APlease let me know the payment details.`;
+                
+                // Use api.whatsapp.com for maximum mobile compatibility
+                const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${message}`;
+                window.location.href = whatsappUrl;
+            } catch (error) {
+                console.error("Error sending order:", error);
+                alert("Sorry, there was an error processing your order. Please try again or use the floating WhatsApp button.");
+            }
         }
-  
-        // Send Delivery Contact Form
+
+        // Send Delivery Contact Form - FIXED for Mobile Browsers
         function sendDeliveryContact() {
-            const name = document.getElementById('contact-name').value.trim();
-            const address = document.getElementById('contact-address').value.trim();
-            const note = document.getElementById('contact-message').value.trim();
+            try {
+                const name = document.getElementById('contact-name').value.trim();
+                const address = document.getElementById('contact-address').value.trim();
+                const note = document.getElementById('contact-message').value.trim();
 
-            if (name === "" || address === "") {
-                alert("Please enter both your name and delivery address.");
-                return;
+                if (name === "" || address === "") {
+                    alert("Please enter both your name and delivery address.");
+                    return;
+                }
+
+                let message = `Hello Afaaz Natural Care! Here are my delivery details:%0A%0A*Name:* ${name}%0A*Address:* ${address}`;
+                
+                if (note !== "") {
+                    message += `%0A*Message/Notes:* ${note}`;
+                }
+
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodedMessage}`;
+                window.location.href = whatsappUrl;
+            } catch (error) {
+                console.error("Error sending delivery details:", error);
+                alert("Sorry, there was an error sending your details. Please try again or use the floating WhatsApp button.");
             }
-
-            let message = `Hello Afaaz Natural Care! Here are my delivery details:%0A%0A*Name:* ${name}%0A*Address:* ${address}`;
-            
-            if (note !== "") {
-                message += `%0A*Message/Notes:* ${note}`;
-            }
-
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodedMessage}`;
-            window.open(whatsappUrl, '_blank');
         }
-      <!-- Address Collection Modal -->
-    <div id="address-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
-        <div style="background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-            <h3 style="color: var(--theme-green); margin-top: 0; font-family: 'Playfair Display', serif; font-size: 1.5rem;">Delivery Details</h3>
-            <p style="color: #666; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; margin-bottom: 1.5rem;">Please provide your details to finalize the order on WhatsApp.</p>
-            
-            <input type="text" id="modal-name" placeholder="Full Name" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: 'Segoe UI', sans-serif;">
-            
-            <textarea id="modal-address" rows="3" placeholder="Door No., Street, Area, City, Pincode" style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; resize: vertical; font-family: 'Segoe UI', sans-serif;"></textarea>
-            
-            <div style="display: flex; gap: 10px;">
-                <button onclick="closeModal()" style="flex: 1; padding: 12px; border: 1px solid #ccc; background: white; border-radius: 5px; cursor: pointer; font-weight: bold; color: #555;">Cancel</button>
-                <button onclick="proceedToWhatsApp()" style="flex: 2; padding: 12px; border: none; background: var(--whatsapp-green); color: white; border-radius: 5px; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 8px;">
-                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: white;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    Proceed
-                </button>
-            </div>
-        </div>
-    </div>
     </script>
 </body>
 </html>
