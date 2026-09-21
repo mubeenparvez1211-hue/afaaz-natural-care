@@ -5,109 +5,337 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afaaz Natural Care</title>
     
-    <!-- Google Fonts for Professional Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --text-dark: #2c2c2c;
-            --nav-bg: #ffffff;
-            
-            /* Theme colors from catalogue */
             --theme-green: #1f4e3d;
             --theme-brown: #693b32;
             --theme-maroon: #741b47;
-            
             --whatsapp-green: #25D366;
-            --instagram-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
 
         body {
-            font-family: 'Lora', serif; 
-            /* Subtle Multi-Color Gradient Background */
-            background: linear-gradient(135deg, #fdfaf4 0%, #edf2ef 50%, #faecee 100%);
-            background-attachment: fixed;
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            font-family: 'Lora', serif;
+            background-color: #fcfcfc;
+            color: #333;
         }
 
-        h1, h2, h3, .brand-title {
+        h1, h2, h3, h4, h5 {
             font-family: 'Playfair Display', serif;
-        }
-
-        /* Navigation */
-        nav {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            text-decoration: none;
             color: var(--theme-green);
-            font-weight: bold;
-            font-size: 1.1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            font-family: 'Segoe UI', sans-serif;
         }
 
-        nav a:hover, nav a:active {
-            background-color: #f0f0f0;
-        }
-
-        /* Home Section */
-        #home {
+        /* Product Card Styles mimicking your previous layout */
+        .product {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
             text-align: center;
-            padding: 4rem 1rem;
-            background: linear-gradient(to bottom, #ffffff, transparent);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
         }
 
-        .brand-title {
-            color: var(--theme-green);
-            font-size: 4rem;
-            margin: 0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .product:hover {
+            transform: translateY(-5px);
         }
 
-        .tagline {
-            color: var(--theme-green);
+        .product img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .bg-shikakai { border-top: 4px solid var(--theme-brown); }
+        .bg-dryfruits { border-top: 4px solid var(--theme-green); }
+        .bg-hairoil { border-top: 4px solid var(--theme-maroon); }
+
+        .p-body h5 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .p-body p {
+            font-size: 0.95rem;
+            color: #666;
+            flex-grow: 1;
+        }
+
+        .price-display {
             font-size: 1.5rem;
-            font-style: italic;
-            margin-top: 0.5rem;
-        }
-
-        .sub-tagline {
-            color: #555;
             font-weight: bold;
-            letter-spacing: 3px;
-            margin-top: 1rem;
+            color: var(--theme-green);
+            margin: 10px 0;
             font-family: 'Segoe UI', sans-serif;
         }
 
-        .intro-text {
-            max-width: 800px; 
+        .order-btn {
+            background-color: var(--whatsapp-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .order-btn:hover {
+            background-color: #1ebd5c;
+            color: white;
+        }
+
+        /* Floating WhatsApp */
+        .float-whatsapp {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--whatsapp-green);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 35px;
+            line-height: 60px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        section { padding: 60px 0; }
+        
+        .bg-custom-light { background-color: #f5f8f6; }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav -->
+    <nav class="navbar navbar-light bg-white shadow-sm sticky-top">
+        <div class="container justify-content-center">
+            <span class="navbar-brand mb-0 h1 fs-2 fw-bold text-success" style="color: var(--theme-green) !important;">AFAAZ</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="text-center pb-4 pt-5">
+        <div class="container">
+            <h2>Nature's Goodness for Your Family</h2>
+            <p class="lead text-muted">100% Natural • Chemical-Free • Safe for All Ages</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section pt-0" id="products">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+
+                <!-- Shikakai Powder -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="product bg-shikakai">
+                        <img src="1000817520.png" alt="Shikakai Powder">
+                        <div class="p-body d-flex flex-column">
+                            <h5>Shikakai Powder</h5>
+                            <p>Natural hair cleanser. Strengthens roots, reduces hair fall, and adds shine.</p>
+                            
+                            <div class="row g-2 mb-2">
+                                <div class="col-8">
+                                    <select id="size-shikakai" class="form-select form-select-sm" onchange="updatePrice('shikakai')">
+                                        <option value="100g" data-price="170">100g Pack</option>
+                                        <option value="250g" data-price="425">250g Pack</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" id="qty-shikakai" class="form-control form-control-sm text-center" value="1" min="1" onchange="updatePrice('shikakai')">
+                                </div>
+                            </div>
+
+                            <div class="price-display">₹<span id="price-shikakai">170</span></div>
+                            <button class="order-btn mt-2" onclick="order('shikakai', 'Shikakai Powder')">Order on WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dry Fruits Powder -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="product bg-dryfruits">
+                        <img src="1000817517.png" alt="Dry Fruits Powder">
+                        <div class="p-body d-flex flex-column">
+                            <h5>Dry Fruits, Nuts & Seeds</h5>
+                            <p>Nutritious energy booster. Rich in vitamins and protein for overall wellness.</p>
+                            
+                            <div class="row g-2 mb-2">
+                                <div class="col-8">
+                                    <select id="size-dryfruits" class="form-select form-select-sm" onchange="updatePrice('dryfruits')">
+                                        <option value="100g" data-price="250">100g Pack</option>
+                                        <option value="250g" data-price="625">250g Pack</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" id="qty-dryfruits" class="form-control form-control-sm text-center" value="1" min="1" onchange="updatePrice('dryfruits')">
+                                </div>
+                            </div>
+
+                            <div class="price-display">₹<span id="price-dryfruits">250</span></div>
+                            <button class="order-btn mt-2" onclick="order('dryfruits', 'Dry Fruits Powder')">Order on WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Herbal Hair Oil -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="product bg-hairoil">
+                        <img src="1000817484.jpg" alt="Herbal Hair Oil">
+                        <div class="p-body d-flex flex-column">
+                            <h5>Herbal Hair Oil</h5>
+                            <p>Made with 20+ herbal ingredients. Prevents dandruff and makes hair soft.</p>
+                            
+                            <div class="row g-2 mb-2">
+                                <div class="col-8">
+                                    <select id="size-hairoil" class="form-select form-select-sm" onchange="updatePrice('hairoil')">
+                                        <option value="100ml" data-price="300">100ml Bottle</option>
+                                        <option value="250ml" data-price="750">250ml Bottle</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" id="qty-hairoil" class="form-control form-control-sm text-center" value="1" min="1" onchange="updatePrice('hairoil')">
+                                </div>
+                            </div>
+
+                            <div class="price-display">₹<span id="price-hairoil">300</span></div>
+                            <button class="order-btn mt-2" onclick="order('hairoil', 'Herbal Hair Oil')">Order on WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Address Section -->
+    <section class="section bg-custom-light" id="address">
+        <div class="container">
+            <h2 class="text-center mb-4">Customer Delivery Details</h2>
+
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card p-4 shadow-sm border-0">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Customer Name</label>
+                            <input type="text" id="custName" class="form-control" placeholder="Enter your full name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Mobile Number</label>
+                            <input type="tel" id="custPhone" class="form-control" placeholder="Enter your WhatsApp number">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Full Delivery Address</label>
+                            <textarea id="custAddress" class="form-control" rows="4" placeholder="Door No, Street, Area, City, Pincode"></textarea>
+                        </div>
+
+                        <p class="text-muted small text-center mt-2 mb-0">
+                            Fill these details first, then click "Order on WhatsApp" on any product above.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container text-center">
+            <h2>Contact & Enquiries</h2>
+            <p class="mb-4 text-muted">Pure • Natural • Safe</p>
+            <p class="fs-5">
+                For Orders & Wholesale, WhatsApp us at<br>
+                <b style="color: var(--theme-green); font-size: 1.5rem;">+91 8248433909</b>
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">© 2026 Afaaz Natural Care. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a class="float-whatsapp" href="https://wa.me/918248433909?text=Hello%20Afaaz%20Natural%20Care!%20I%20have%20an%20enquiry." target="_blank">
+        <!-- SVG WhatsApp Icon -->
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="white" style="margin-top: -5px;">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Logic -->
+    <script>
+        const WHATSAPP_NUMBER = "918248433909";
+
+        // Dynamic price calculation
+        function updatePrice(productId) {
+            const sizeSelect = document.getElementById(`size-${productId}`);
+            const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+            const basePrice = parseInt(selectedOption.getAttribute('data-price'));
+            
+            let qty = parseInt(document.getElementById(`qty-${productId}`).value);
+            if(qty < 1 || isNaN(qty)) {
+                qty = 1;
+                document.getElementById(`qty-${productId}`).value = 1;
+            }
+            
+            document.getElementById(`price-${productId}`).textContent = basePrice * qty;
+        }
+
+        // Process order and redirect to WhatsApp
+        function order(productId, productName) {
+            const custName = document.getElementById('custName').value.trim();
+            const custPhone = document.getElementById('custPhone').value.trim();
+            const custAddress = document.getElementById('custAddress').value.trim();
+
+            // Force customer to fill out the form first
+            if (custName === "" || custAddress === "") {
+                alert("Please scroll down and fill in your Delivery Address before ordering.");
+                document.getElementById('address').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            // Grab product details
+            const sizeSelect = document.getElementById(`size-${productId}`);
+            const selectedSize = sizeSelect.options[sizeSelect.selectedIndex].value;
+            const qty = document.getElementById(`qty-${productId}`).value;
+            const totalPrice = document.getElementById(`price-${productId}`).textContent;
+
+            // Construct Message
+            let message = `Hello Afaaz Natural Care! I would like to place an order:%0A%0A*Product:* ${productName}%0A*Size:* ${selectedSize}%0A*Quantity:* ${qty}%0A*Total Price:* ₹${totalPrice}%0A%0A*Customer Details:*%0A*Name:* ${custName}%0A*Phone:* ${custPhone}%0A*Address:* ${custAddress}%0A%0APlease confirm my order.`;
+
+            // Mobile-safe redirect
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+        }
+    </script>
+
+    <!-- Service Worker -->
+    <script>
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register('sw.js').catch(err => console.log("Service Worker not active yet."));
+        }
+    </script>
+</body>
+</html>
             margin: 2.5rem auto 0; 
             padding: 0 1rem; 
             color: #444; 
