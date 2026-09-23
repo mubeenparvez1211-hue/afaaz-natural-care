@@ -1,0 +1,17 @@
+{
+  "name": "Afaaz Natural Care",
+  "short_name": "Afaaz",
+  "description": "100% Natural, Chemical-Free Hair and Body Care",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fdfaf4",
+  "theme_color": "#1f4e3d",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
